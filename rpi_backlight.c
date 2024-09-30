@@ -31,9 +31,7 @@ static int rpi_backlight_update_status(struct backlight_device *bl)
 	int brightness = bl->props.brightness;
 	int ret;
 
-	if (bl->props.power != FB_BLANK_UNBLANK ||
-	    bl->props.fb_blank != FB_BLANK_UNBLANK ||
-	    bl->props.state & (BL_CORE_SUSPENDED | BL_CORE_FBBLANK))
+	if (backlight_is_blank(bl))
 		brightness = 0;
 
 	ret = rpi_firmware_property(gbl->fw,

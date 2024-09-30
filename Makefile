@@ -1,12 +1,14 @@
-obj-m += rpi_backlight.o rpi-ft5406.o
+obj-m += rpi_backlight.o
+
+KERNEL_DIR ?= /lib/modules/`uname -r`/build
 
 .PHONY: modules install clean
 
 modules:
-	make -C /lib/modules/$(shell uname -r)/build M=$(shell pwd) modules
+	make -C $(KERNEL_DIR) M=$$PWD modules
 
 install:
-	make -C /lib/modules/$(shell uname -r)/build M=$(shell pwd) modules_install
+	make -C $(KERNEL_DIR) M=$$PWD modules_install
 
 clean:
-	make -C /lib/modules/$(shell uname -r)/build M=$(shell pwd) clean
+	make -C $(KERNEL_DIR) M=$$PWD clean
